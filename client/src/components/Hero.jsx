@@ -13,10 +13,11 @@ const Hero = () => {
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
           tenetur doloremque molestias repellat minus asperiores in aperiam
+          dolor, quaerat praesentium. tenetur doloremque molestias repellat minus asperiores in aperiam
           dolor, quaerat praesentium.
         </p>
       </div>
-      <div className="hero-img">
+      <div className="hero-img  ">
         <img
           src={image}
           alt="hero"

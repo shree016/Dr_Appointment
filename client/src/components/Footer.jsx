@@ -21,9 +21,7 @@ const Footer = () => {
               <li>
                 <NavLink to={"/appointments"}>Appointments</NavLink>
               </li>
-              <li>
-                <NavLink to={"/notifications"}>Notifications</NavLink>
-              </li>
+              
               <li>
                 <HashLink to={"/#contact"}>Contact Us</HashLink>
               </li>

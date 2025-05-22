@@ -50,14 +50,7 @@ function App() {
               </Protected>
             }
           />
-          <Route
-            path="/notifications"
-            element={
-              <Protected>
-                <Notifications />
-              </Protected>
-            }
-          />
+        
           <Route
             path="/applyfordoctor"
             element={
