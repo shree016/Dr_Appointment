@@ -118,13 +118,20 @@ function Register() {
             value={formDetails.email}
             onChange={inputChange}
           />
-          <input
-            type="file"
-            onChange={(e) => onUpload(e.target.files[0])}
-            name="profile-pic"
-            id="profile-pic"
-            className="form-input"
-          />
+         <div className="flex items-center py-2  space-x-3">
+          <div className="text-gray-500 text-sm">
+        { ' profile '}
+      </div>
+      <input
+        type="file"
+        id="profile-pic"
+        name="profile-pic"
+        onChange={(e) => onUpload(e.target.files[0])}
+        className="hidden"
+      />
+     
+      
+    </div>
           <input
             type="password"
             name="password"
