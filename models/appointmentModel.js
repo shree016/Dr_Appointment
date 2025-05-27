@@ -24,6 +24,9 @@ const schema = mongoose.Schema(
       type: String,
       default: "Pending",
     },
+    token: {
+      type: String,     // Add this token field here!
+    },
   },
   {
     timestamps: true,

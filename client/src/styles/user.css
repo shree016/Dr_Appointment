@@ -59,6 +59,13 @@ td {
   border-radius: 50%;
   border: 1px solid rgb(165, 165, 165);
 }
+.user-table-pic2 {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 0; /* makes it square */
+  border: 1px solid #ccc;
+}
 
 .select {
   display: flex;

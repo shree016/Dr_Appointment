@@ -99,9 +99,9 @@ const AdminApplications = () => {
                     <th>S.No</th>
                     <th>Pic</th>
                     <th>First Name</th>
-                    <th>Last Name</th>
+                  
                     <th>Email</th>
-                    <th>Mobile No.</th>
+                    <th>Certificates</th>
                     <th>Experience</th>
                     <th>Specialization</th>
                     <th>Fees</th>
@@ -124,9 +124,27 @@ const AdminApplications = () => {
                           />
                         </td>
                         <td>{ele?.userId?.firstname}</td>
-                        <td>{ele?.userId?.lastname}</td>
+                        
                         <td>{ele?.userId?.email}</td>
-                        <td>{ele?.userId?.mobile}</td>
+       <td>
+  {ele?.pic2 ? (
+  <a
+    href={ele.pic2}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      className="user-table-pic2"
+      src={ele.pic2}
+      alt="certificate"
+    />
+  </a>
+) : (
+  <span>No Certificate</span>
+)}
+
+</td>
+
                         <td>{ele?.experience}</td>
                         <td>{ele?.specialization}</td>
                         <td>{ele?.fees}</td>
