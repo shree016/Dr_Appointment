@@ -17,15 +17,15 @@ const Appointments = () => {
   const { loading } = useSelector((state) => state.root);
   const { userId } = jwt_decode(localStorage.getItem("token"));
 
-  const getAllAppoint = async (e) => {
+  const getAllAppoint = async () => {
     try {
       dispatch(setLoading(true));
-      const temp = await fetchData(
-        `/appointment/getallappointments?search=${userId}`
-      );
+      const temp = await fetchData(`/appointment/getallappointments?search=${userId}`);
       setAppointments(temp);
       dispatch(setLoading(false));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setLoading(false));
+    }
   };
 
   useEffect(() => {
@@ -49,9 +49,9 @@ const Appointments = () => {
           }
         ),
         {
-          success: "Appointment booked successfully",
-          error: "Unable to book appointment",
-          loading: "Booking appointment...",
+          success: "Appointment marked as completed",
+          error: "Unable to mark appointment",
+          loading: "Completing appointment...",
         }
       );
 
@@ -73,50 +73,52 @@ const Appointments = () => {
           {appointments.length > 0 ? (
             <div className="appointments">
               <table>
-  <thead>
-    <tr>
-      <th>S.No</th>
-      <th>Doctor</th>
-      <th>Patient</th>
-      <th>Appointment Date</th>
-      <th>Appointment Time</th>
-      <th>Booking Date</th>
-      <th>Booking Time</th>
-      <th>Status</th>
-      <th>Token</th> {/* New column for token */}
-      {userId === appointments[0]?.doctorId?._id ? <th>Action</th> : null}
-    </tr>
-  </thead>
-  <tbody>
-    {appointments.map((ele, i) => (
-      <tr key={ele._id}>
-        <td>{i + 1}</td>
-        <td>{ele.doctorId?.firstname + " " + ele.doctorId?.lastname}</td>
-        <td>{ele.userId?.firstname + " " + ele.userId?.lastname}</td>
-        <td>{ele.date}</td>
-        <td>{ele.time}</td>
-        <td>{ele.createdAt.split("T")[0]}</td>
-        <td>{ele.updatedAt.split("T")[1].split(".")[0]}</td>
-        <td>{ele.status}</td>
-        <td>{ele.status.toLowerCase() === "completed" ? ele.token || "-" : "-"}</td> {/* Show token if completed */}
-        {userId === ele.doctorId?._id ? (
-          <td>
-            <button
-              className={`btn user-btn accept-btn ${
-                ele.status.toLowerCase() === "completed" ? "disable-btn" : ""
-              }`}
-              disabled={ele.status.toLowerCase() === "completed"}
-              onClick={() => complete(ele)}
-            >
-              Complete
-            </button>
-          </td>
-        ) : null}
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Doctor</th>
+                    <th>Patient</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Booking Date</th>
+                    <th>Booking Time</th>
+                    <th>Status</th>
+                    <th>Token</th>
+                    {userId === appointments[0]?.doctorId?._id && <th>Action</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {appointments.map((ele, i) => (
+                    <tr key={ele._id}>
+                      <td>{i + 1}</td>
+                      <td>{ele.doctorId?.firstname + " " + ele.doctorId?.lastname}</td>
+                      <td>{ele.userId?.firstname + " " + ele.userId?.lastname}</td>
+                      <td>{ele.date}</td>
+                      <td>{ele.time}</td>
+                      <td>{ele.createdAt.split("T")[0]}</td>
+                      <td>{ele.updatedAt.split("T")[1].split(".")[0]}</td>
+                      <td>{ele.status}</td>
+                      <td>{ele.status.toLowerCase() === "completed" ? ele.token || "-" : "-"}</td>
+                      {userId === ele.doctorId?._id && (
+                        <td>
+                          {ele.status.toLowerCase() === "completed" ? (
+                            <button className="btn user-btn completed-btn" disabled>
+                              Completed
+                            </button>
+                          ) : (
+                            <button
+                              className="btn user-btn accept-btn"
+                              onClick={() => complete(ele)}
+                            >
+                              Complete
+                            </button>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <Empty />
@@ -127,4 +129,5 @@ const Appointments = () => {
     </>
   );
 };
+
 export default Appointments;

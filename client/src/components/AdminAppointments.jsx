@@ -15,13 +15,15 @@ const AdminAppointments = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.root);
 
-  const getAllAppoint = async (e) => {
+  const getAllAppoint = async () => {
     try {
       dispatch(setLoading(true));
       const temp = await fetchData(`/appointment/getallappointments`);
       setAppointments(temp);
       dispatch(setLoading(false));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setLoading(false));
+    }
   };
 
   useEffect(() => {
@@ -45,9 +47,9 @@ const AdminAppointments = () => {
           }
         ),
         {
-          success: "Appointment booked successfully",
-          error: "Unable to book appointment",
-          loading: "Booking appointment...",
+          success: "Appointment marked as completed",
+          error: "Failed to complete appointment",
+          loading: "Completing appointment...",
         }
       );
 
@@ -77,42 +79,36 @@ const AdminAppointments = () => {
                     <th>Booking Date</th>
                     <th>Booking Time</th>
                     <th>Status</th>
-
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {appointments?.map((ele, i) => {
-                    return (
-                      <tr key={ele?._id}>
-                        <td>{i + 1}</td>
-                        <td>
-                          {ele?.doctorId?.firstname +
-                            " " +
-                            ele?.doctorId?.lastname}
-                        </td>
-                        <td>
-                          {ele?.userId?.firstname + " " + ele?.userId?.lastname}
-                        </td>
-                        <td>{ele?.date}</td>
-                        <td>{ele?.time}</td>
-                        <td>{ele?.createdAt.split("T")[0]}</td>
-                        <td>{ele?.updatedAt.split("T")[1].split(".")[0]}</td>
-                        <td>{ele?.status}</td>
-                        <td>
+                  {appointments?.map((ele, i) => (
+                    <tr key={ele?._id}>
+                      <td>{i + 1}</td>
+                      <td>{ele?.doctorId?.firstname + " " + ele?.doctorId?.lastname}</td>
+                      <td>{ele?.userId?.firstname + " " + ele?.userId?.lastname}</td>
+                      <td>{ele?.date}</td>
+                      <td>{ele?.time}</td>
+                      <td>{ele?.createdAt.split("T")[0]}</td>
+                      <td>{ele?.updatedAt.split("T")[1].split(".")[0]}</td>
+                      <td>{ele?.status}</td>
+                      <td>
+                        {ele?.status === "Completed" ? (
+                          <button className="btn user-btn completed-btn" disabled>
+                            Completed
+                          </button>
+                        ) : (
                           <button
-                            className={`btn user-btn accept-btn ${
-                              ele?.status === "Completed" ? "disable-btn" : ""
-                            }`}
-                            disabled={ele?.status === "Completed"}
+                            className="btn user-btn accept-btn"
                             onClick={() => complete(ele)}
                           >
                             Complete
                           </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                        )}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
