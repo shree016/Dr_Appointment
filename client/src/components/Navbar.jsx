@@ -50,8 +50,8 @@ const Navbar = () => {
             <NavLink to={"/"}>Home</NavLink>
           </li>
 
-          {/* Show Doctors only if not a doctor */}
-          {!isDoctor && (
+          {/* Show Doctors only if not a doctor and admin  */}
+          {!isDoctor && !isAdmin && (
             <li>
               <NavLink to={"/doctors"}>Doctors</NavLink>
             </li>
