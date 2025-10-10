@@ -1,7 +1,11 @@
 # 🏥 Doctor Appointment Booking System
 
-A full-stack web application built using the MERN stack (MongoDB, Express.js, React.js, Node.js) that allows patients to book appointments with doctors based on availability, specialization. 
-It includes secure authentication, real-time slot checking, and role-based dashboards for Patients, Doctors, and Admins.
+Dr. Appoint is a full-stack, cloud-deployed healthcare management system built using the MERN stack (MongoDB, Express.js, React.js, Node.js) that enables patients to seamlessly book appointments with doctors based on their specialization.
+
+The platform delivers a secure, scalable, and user-friendly experience through role-based dashboards for Patients, Doctors, and Admins, along with appointment tracking, notifications, and profile management.
+
+It also features JWT-based authentication, secure cloud storage, and a modern responsive UI built with React and Tailwind CSS.
+Implemented automated CI/CD pipeline via GitHub–Railway integration, enabling seamless deployment with every commit and ensuring rapid updates to production.
 
 ---
 
@@ -90,6 +94,7 @@ npm start
 
 **Shrilaxmi Heralagi**  
 🔗 [Connect with me on LinkedIn](https://www.linkedin.com/in/shree016/)
+
 
 
 
