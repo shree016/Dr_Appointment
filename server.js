@@ -13,8 +13,8 @@ require("dotenv").config();
 const port = process.env.PORT || 5050;
 
 const allowedOrigins = [
-  "http://localhost:3000",                     // local dev
-  "https://your-frontend-name.vercel.app",     // replace with your actual Vercel URL
+  "http://localhost:3000", // local React dev
+  "drappointment-production-adca.up.railway.app", // deployed frontend URL
 ];
 
 app.use(
