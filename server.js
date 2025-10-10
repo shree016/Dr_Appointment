@@ -12,7 +12,24 @@ const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 5050;
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",                     // local dev
+  "https://your-frontend-name.vercel.app",     // replace with your actual Vercel URL
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use("/api/user", userRouter);
 app.use("/api/doctor", doctorRouter);
@@ -24,4 +41,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-app.listen(port, () => {});
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+

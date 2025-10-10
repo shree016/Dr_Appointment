@@ -70,7 +70,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            Shree
+           Shree
           </a>{" "}
           © {new Date().getFullYear()}
         </div>
