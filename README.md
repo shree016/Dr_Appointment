@@ -20,6 +20,7 @@ It includes secure authentication, real-time slot checking, and role-based dashb
 - 🌐 **Responsive UI**: Built with React.js and Tailwind CSS for mobile and desktop.
 - ☁️ **Image Uploads**: Integrated with Cloudinary for doctor profile pictures.
 - 📬 **Contact/Feedback Forms**: Handled via Formspree (no backend required).
+- 🚀**Hosting**:  Fully Deployed on Railway (Full-stack: Backend + Frontend in one service)
 
 ---
 
@@ -89,6 +90,7 @@ npm start
 
 **Shrilaxmi Heralagi**  
 🔗 [Connect with me on LinkedIn](https://www.linkedin.com/in/shree016/)
+
 
 
 
