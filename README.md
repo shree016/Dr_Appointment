@@ -7,7 +7,7 @@ It includes secure authentication, real-time slot checking, and role-based dashb
 
 ## 🔗 Live Demo
 
-> 🚀 _Coming Soon_ 
+> 🚀 https://drappointment-production-adca.up.railway.app/
 
 ---
 
@@ -89,6 +89,7 @@ npm start
 
 **Shrilaxmi Heralagi**  
 🔗 [Connect with me on LinkedIn](https://www.linkedin.com/in/shree016/)
+
 
 
 
