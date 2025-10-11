@@ -9,8 +9,10 @@ const schema = mongoose.Schema(
     },
     lastname: {
       type: String,
-      required: true,
-      minLength: 3,
+      default: "",
+      
+      
+      
     },
     email: {
       type: String,
@@ -53,7 +55,7 @@ const schema = mongoose.Schema(
     pic: {
       type: String,
       default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+        "https://res.cloudinary.com/dpbl2fnt8/image/upload/v1760183217/defaultProfile_kb63yy.png",
     },
       token: {
       type: String,

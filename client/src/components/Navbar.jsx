@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import { HashLink } from "react-router-hash-link";
@@ -10,10 +10,12 @@ import jwt_decode from "jwt-decode";
 
 const Navbar = () => {
   const [iconActive, setIconActive] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState(null);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     if (token) {
@@ -27,12 +29,27 @@ const Navbar = () => {
     }
   }, [token]);
 
+  // Handle click outside dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const logoutFunc = () => {
     dispatch(setUserInfo({}));
     localStorage.removeItem("token");
     setToken("");
     setUser(null);
     navigate("/login");
+  };
+
+  const handleProfileClick = () => {
+    setDropdownOpen((prev) => !prev);
   };
 
   const isLoggedIn = !!token;
@@ -45,69 +62,78 @@ const Navbar = () => {
         <h2 className="nav-logo">
           <NavLink to={"/"}>Dr_Appoint</NavLink>
         </h2>
+
         <ul className="nav-links">
           <li>
             <NavLink to={"/"}>Home</NavLink>
           </li>
 
-          {/* Show Doctors only if not a doctor and admin  */}
           {!isDoctor && !isAdmin && (
             <li>
               <NavLink to={"/doctors"}>Doctors</NavLink>
             </li>
           )}
 
-          {/* Admin-only route */}
           {isLoggedIn && isAdmin && (
             <li>
               <NavLink to={"/dashboard/users"}>Dashboard</NavLink>
             </li>
           )}
 
-          {/* Logged-in non-admin users */}
           {isLoggedIn && !isAdmin && (
             <>
               <li>
                 <NavLink to={"/appointments"}>Appointments</NavLink>
               </li>
-
-              {/* Show only if NOT a doctor */}
               {!isDoctor && (
                 <li>
                   <NavLink to={"/applyfordoctor"}>Apply for doctor</NavLink>
                 </li>
               )}
-
               <li>
                 <HashLink to={"/#contact"}>Contact Us</HashLink>
               </li>
-              <li>
-                <NavLink to={"/profile"}>Profile</NavLink>
-              </li>
             </>
-          )}
-
-          {!isLoggedIn ? (
-            <>
-              <li>
-                <NavLink className="btn" to={"/login"}>
-                  Login
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="btn" to={"/register"}>
-                  Register
-                </NavLink>
-              </li>
-            </>
-          ) : (
-            <li>
-              <span className="btn" onClick={logoutFunc}>
-                Logout
-              </span>
-            </li>
           )}
         </ul>
+
+        {/* --- Sign In / Profile --- */}
+        <div className="top-right-btn" ref={dropdownRef}>
+          {!isLoggedIn ? (
+            <NavLink className="btn signin-btn" to={"/login"}>
+              Sign In
+            </NavLink>
+          ) : (
+            <div className="profile-container">
+              <div className="profile-avatar" onClick={handleProfileClick}>
+                <img
+                  src={
+                    user?.profilePic ||
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  }
+                  alt="Profile"
+                />
+              </div>
+
+              {dropdownOpen && (
+                <div className="profile-dropdown">
+                  <button
+                    className="dropdown-item"
+                    onClick={() => {
+                      navigate("/profile");
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Profile
+                  </button>
+                  <button className="dropdown-item logout" onClick={logoutFunc}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </nav>
 
       <div className="menu-icons">

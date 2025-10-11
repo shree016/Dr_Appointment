@@ -8,6 +8,7 @@ const appointRouter = require("./routes/appointRoutes");
 const path = require("path");
 const notificationRouter = require("./routes/notificationRouter");
 
+
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 5050;
@@ -17,6 +18,7 @@ const allowedOrigins = [
   "https://drappointment-production-adca.up.railway.app",
 ];
 
+ app.use(express.json());
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {

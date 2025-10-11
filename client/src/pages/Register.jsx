@@ -51,7 +51,7 @@ function Register() {
       e.preventDefault();
 
       if (loading) return;
-      if (file === "") return;
+   
 
       const { firstname, lastname, email, password, confpassword } =
         formDetails;
@@ -66,6 +66,8 @@ function Register() {
       } else if (password !== confpassword) {
         return toast.error("Passwords do not match");
       }
+      
+      const defaultProfile ="https://res.cloudinary.com/dpbl2fnt8/image/upload/v1760183217/defaultProfile_kb63yy.png";
 
       await toast.promise(
         axios.post("/user/register", {
@@ -73,7 +75,7 @@ function Register() {
           lastname,
           email,
           password,
-          pic: file,
+          pic: file ||  defaultProfile,
         }),
         {
           pending: "Registering user...",
@@ -118,20 +120,7 @@ function Register() {
             value={formDetails.email}
             onChange={inputChange}
           />
-         <div className="flex items-center py-2  space-x-3">
-          <div className="text-gray-500 text-sm">
-        { ' profile '}
-      </div>
-      <input
-        type="file"
-        id="profile-pic"
-        name="profile-pic"
-        onChange={(e) => onUpload(e.target.files[0])}
-        className="hidden"
-      />
-     
-      
-    </div>
+        
           <input
             type="password"
             name="password"

@@ -6,6 +6,8 @@ const Appointment = require("../models/appointmentModel");
 
 const getuser = async (req, res) => {
   try {
+    
+
     const user = await User.findById(req.params.id).select("-password");
     return res.send(user);
   } catch (error) {
