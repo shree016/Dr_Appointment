@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import fetchData from "../helper/apiCall";
 import jwt_decode from "jwt-decode";
+import convertToBase64 from "../helper/convertImage";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 

@@ -15,4 +15,7 @@ userRouter.put("/updateprofile", auth, userController.updateprofile);
 
 userRouter.delete("/deleteuser", auth, userController.deleteuser);
 
+userRouter.put("/updatepic/:id", auth, userController.updatePic);
+
+
 module.exports = userRouter;

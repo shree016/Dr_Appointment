@@ -27,12 +27,14 @@ nav {
   color: var(--bold-text-color);
   text-decoration: none;
   font-weight: 600;
+
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
   align-items: center;
+  padding: 1rem 5rem;
 }
 
 .nav-links .btn {

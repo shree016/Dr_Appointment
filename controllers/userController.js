@@ -4,6 +4,36 @@ const jwt = require("jsonwebtoken");
 const Doctor = require("../models/doctorModel");
 const Appointment = require("../models/appointmentModel");
 
+
+const User = require("../models/userModel");
+
+exports.updatePic = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { pic } = req.body;
+
+    if (!pic) {
+      return res.status(400).json({ error: "No picture URL provided" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { pic },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating profile picture:", error);
+    res.status(500).json({ error: "Failed to update profile picture" });
+  }
+};
+
+
 const getuser = async (req, res) => {
   try {
     

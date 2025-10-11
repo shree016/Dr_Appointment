@@ -7,6 +7,9 @@ import { setUserInfo } from "../redux/reducers/rootSlice";
 import { FiMenu } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
 const Navbar = () => {
   const [iconActive, setIconActive] = useState(false);
@@ -15,19 +18,37 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState(null);
+ 
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        setUser(decoded);
-      } catch (error) {
-        console.error("Invalid token");
-        setUser(null);
-      }
-    }
-  }, [token]);
+useEffect(() => {
+  if (!token) return;
+
+  try {
+    const decoded = jwt_decode(token);
+    const { userId } = decoded;
+
+    // Fetch full user details (includes pic)
+    axios
+      .get(`/user/getuser/${userId}`, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setUser(res.data); // now user has pic, name, etc.
+      })
+      .catch((err) => {
+        console.error("Error fetching user data:", err);
+      });
+  } catch (error) {
+    console.error("Invalid token");
+    setUser(null);
+  }
+}, [token]);
+
+
+
+
+
 
   // Handle click outside dropdown
   useEffect(() => {
@@ -108,7 +129,7 @@ const Navbar = () => {
               <div className="profile-avatar" onClick={handleProfileClick}>
                 <img
                   src={
-                    user?.profilePic ||
+                    user?.pic ||
                     "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                   }
                   alt="Profile"
