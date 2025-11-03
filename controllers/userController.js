@@ -7,7 +7,7 @@ const Appointment = require("../models/appointmentModel");
 
 
 
-exports.updatePic = async (req, res) => {
+const updatePic = async (req, res) => {
   try {
     const userId = req.params.id;
     const { pic } = req.body;
