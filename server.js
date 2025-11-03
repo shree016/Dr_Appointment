@@ -15,7 +15,8 @@ const port = process.env.PORT || 5050;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://drappointment-production-adca.up.railway.app",
+    "https://drappointment-production-adca.up.railway.app",
+  "https://dr-appointment-62j8-5qcslccfm-shrilaxmis-projects.vercel.app"
 ];
 
  app.use(express.json());
