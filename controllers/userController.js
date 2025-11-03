@@ -5,7 +5,7 @@ const Doctor = require("../models/doctorModel");
 const Appointment = require("../models/appointmentModel");
 
 
-const User = require("../models/userModel");
+
 
 exports.updatePic = async (req, res) => {
   try {
