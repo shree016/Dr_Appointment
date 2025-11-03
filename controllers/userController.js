@@ -138,4 +138,5 @@ module.exports = {
   register,
   updateprofile,
   deleteuser,
+  updatePic,
 };
