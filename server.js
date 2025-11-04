@@ -5,21 +5,18 @@ require("./db/conn");
 const userRouter = require("./routes/userRoutes");
 const doctorRouter = require("./routes/doctorRoutes");
 const appointRouter = require("./routes/appointRoutes");
-const path = require("path");
 const notificationRouter = require("./routes/notificationRouter");
 
-
 const app = express();
-require("dotenv").config();
 const port = process.env.PORT || 5050;
 
 const allowedOrigins = [
   "http://localhost:3000",
-    "https://drappointment-production-adca.up.railway.app",
+  "https://drappointment-production-adca.up.railway.app",
   "https://dr-appointment-62j8-5qcslccfm-shrilaxmis-projects.vercel.app"
 ];
 
- app.use(express.json());
+app.use(express.json());
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -35,23 +32,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.options("*", cors(allowedOrigins)); // ✅ handles preflight correctly
-
-
-app.use(express.json());
+// ✅ Define your API routes only
 app.use("/api/user", userRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/appointment", appointRouter);
 app.use("/api/notification", notificationRouter);
-app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// ✅ Add a default route for testing
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully 🚀");
 });
-
-
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });
-
