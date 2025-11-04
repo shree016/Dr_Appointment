@@ -10,39 +10,44 @@ const notificationRouter = require("./routes/notificationRouter");
 const app = express();
 const port = process.env.PORT || 5050;
 
+// ✅ allowed frontend URLs
 const allowedOrigins = [
   "http://localhost:3000",
   "https://drappointment-production-adca.up.railway.app",
   "https://dr-appointment-62j8-5qcslccfm-shrilaxmis-projects.vercel.app",
   "https://dr-appointment-62j8-2x58sdyjh-shrilaxmis-projects.vercel.app",
-  "https://dr-appointment-62j8.vercel.app/",
-  
-     "https://dr-appointment-z1t3.onrender.com"
+  "https://dr-appointment-62j8.vercel.app",
+  "https://dr-appointment-62j8-aeu532rze-shrilaxmis-projects.vercel.app"
 ];
 
-app.use(express.json());
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") return res.sendStatus(200);
-  next();
-});
+// ✅ proper CORS middleware
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  })
+);
 
-// ✅ Define your API routes only
+app.use(express.json());
+
+// ✅ API routes
 app.use("/api/user", userRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/appointment", appointRouter);
 app.use("/api/notification", notificationRouter);
 
-// ✅ Add a default route for testing
+// ✅ Default test route
 app.get("/", (req, res) => {
   res.send("Backend is running successfully 🚀");
 });
