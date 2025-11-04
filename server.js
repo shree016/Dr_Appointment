@@ -17,7 +17,8 @@ const allowedOrigins = [
   "https://dr-appointment-62j8-5qcslccfm-shrilaxmis-projects.vercel.app",
   "https://dr-appointment-62j8-2x58sdyjh-shrilaxmis-projects.vercel.app",
   "https://dr-appointment-62j8.vercel.app",
-  "https://dr-appointment-62j8-aeu532rze-shrilaxmis-projects.vercel.app"
+  "https://dr-appointment-62j8-aeu532rze-shrilaxmis-projects.vercel.app",
+  "https://dr-appointment-62j8-cjnj2myv0-shrilaxmis-projects.vercel.app"
 ];
 
 // ✅ proper CORS middleware
